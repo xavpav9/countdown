@@ -1,1 +1,31 @@
+@font-face {
+  font-family: "Monofonto";
+  src: url("fonts/Monofonto-Regular.woff2") format("woff2"), url("fonts/Monofonto-Regular.woff2") format("woff");    
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+}
 
+*, *::after, *::before {
+  line-height: 1.5;
+  padding: 0px;
+  margin: 0px;
+}
+
+html {
+  font-family: "Monofonto", system-ui, monospace;
+}
+
+html * {
+  font-family: inherit;
+}
+
+body {
+  padding: 5px;
+  background-color: lightblue;
+}
+
+h1 {
+  text-align: center;
+  font-size: 3rem;
+}
