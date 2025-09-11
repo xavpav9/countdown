@@ -22,10 +22,135 @@ html * {
 
 body {
   padding: 5px;
-  background-color: lightblue;
+  background: url("images/flower.jpg") no-repeat;
+  background-size: auto;
 }
 
 h1 {
   text-align: center;
   font-size: 3rem;
 }
+
+.gameboard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+  background-color: lightblue;
+  width: max(600px, 40vw);
+  margin: 0px auto;
+  height: 80vh;
+
+  border: 2px solid black;
+  border-radius: 20px;
+}
+
+.left {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 3vh;
+}
+
+.target {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+
+  font-size: 5rem;
+  font-family: "Jersey 10", system-ui;
+
+  .display-box {
+    background-color: black;
+    border: 2px dashed green;
+    border-radius: 5px;
+    width: 4rem;
+    height: 5rem;
+    color: green;
+    line-height: 100%;
+    vertical-align: middle;
+    text-align: center;
+  }
+}
+
+
+.chosen {
+  display: flex;
+  gap: 8px;
+
+  & > div {
+    border: 2px solid blue;
+    border-radius: 5px;
+    background-color: white;
+    width: 70px;
+    height: 70px;
+    font-size: 70px;
+  }
+}
+
+.chosen > div, .selection > div > div {
+  line-height: 100%;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.selection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  & > div {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+
+
+    & > div {
+      border: 1px solid blue;
+      border-radius: 5px;
+      background-color: #fffbe7;
+      width: 50px;
+      height: 50px;
+      font-size: 50px;
+    }
+  }
+}
+
+.buttons {
+  & > * {
+    padding: 4px 8px;
+    font-size: 1.5rem;
+    border: 2px solid black;
+    border-radius: 2px;
+  }
+
+  .start {
+    background-color: #00ff00;
+    &:hover {background-color: #00ef00;}
+    &:active {background-color: #00cf00;}
+  }
+
+  .reset-stop {
+    background-color: #ff0000;
+    &:hover {background-color: #ef0000;}
+    &:active {background-color: #cf0000;}
+  }
+
+  .solve-button {
+    background-color: #f1f1f1;
+    &:hover {background-color: #e1e1e1;}
+    &:active {background-color: #d1d1d1;}
+  }
+}
+
+
+
+
+.right {
+  display: none;
+}
+
+.solve-display {}
+

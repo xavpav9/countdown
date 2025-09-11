@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=block" rel="stylesheet">
     <title>Countdown</title>
     <link rel="stylesheet" href="./style.css">
     <script src="script.js" defer></script>
@@ -16,8 +19,15 @@
           <div class="display-box"></div>
           <div class="display-box"></div>
         </div>
+        <div class="chosen">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
         <div class="selection">
-          <!--Grid of selectable numbers-->
           <div class="large-row">
             <div></div>
             <div></div>
@@ -53,14 +63,14 @@
           </div>
         </div>
         <div class="buttons">
-          <button class="start-stop">Start</button>
-          <button class="reset">Reset</button>
-          <button class="solve">Solve</button>
+          <button class="start">Start</button>
+          <button class="reset-stop">Stop</button>
+          <button class="solve-button">Solve</button>
         </div>
       </div>
       <div class="right">
         <h2>Solve:</h2>
-        <div class="solve">
+        <div class="solve-display">
 
         </div>
       </div>
