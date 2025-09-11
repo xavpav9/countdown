@@ -32,13 +32,15 @@ h1 {
 }
 
 .gameboard {
+  --max-width: 40vw; /* solve-visible ? 80vw : 40vw */
+
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 
   padding: 20px;
   background-color: lightblue;
-  width: max(600px, 40vw);
+  width: max(600px, var(--max-width));
   margin: 0px auto;
   height: 80vh;
 
@@ -149,8 +151,26 @@ h1 {
 
 
 .right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3vh;
+
+  width: 40%;
+  height: 80%;
+
+  h2 {
+    text-align: center;
+  }
+
   display: none;
 }
 
-.solve-display {}
+.solve-display {
+  border: 2px solid blue;
+  background-color: white;
+  height: 100%;
+  width: 80%;
+  overflow: auto;
+}
 
