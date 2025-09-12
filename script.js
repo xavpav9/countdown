@@ -3,9 +3,15 @@ const smallRows = document.querySelectorAll(".small-row");
 const largeRow = document.querySelector(".large-row");
 const selection = document.querySelector(".selection");
 const chosen = document.querySelector(".chosen");
+const startBtn = document.querySelector(".start");
+const stopResetBtn = document.querySelector(".reset-stop");
+const displayBoxes = [...document.querySelectorAll(".display-box")];
+const INTERVAL = 400;
+let target = "";
 
 const display = [];
 const rowValues = [];
+let isChosen = false;
 assignNumbers();
 
 selection.addEventListener("click", evt => {
@@ -14,6 +20,22 @@ selection.addEventListener("click", evt => {
     evt.target.classList.add("selected");
     display.push(rowValues[boxes.indexOf(evt.target)]);
     displayValues();
+  };
+});
+
+startBtn.addEventListener("click", evt => {
+  if (display.length === 6) {
+    randomiseTarget()
+  }
+});
+
+stopResetBtn.addEventListener("click", evt => {
+  if (display.length === 6 && stopResetBtn.textContent === "Stop") {
+    isChosen = true;
+    setTimeout(() => {isChosen = false}, INTERVAL + 1);
+    for (const box of displayBoxes) {
+      target += box.textContent;
+    };
   };
 });
 
@@ -34,12 +56,23 @@ function assignNumbers() {
 };
 
 function displayValues() {
-  const displayBoxes = [...chosen.querySelectorAll("div")];
+  const chosenBoxes = [...chosen.querySelectorAll("div")];
   for (let i = 0; i < 6; ++i) {
     if (display[i] !== undefined) {
-      displayBoxes[i].textContent = display[i];
-      if (display[i] === 100) displayBoxes[i].classList.add("hundred");
+      chosenBoxes[i].textContent = display[i];
+      if (display[i] === 100) chosenBoxes[i].classList.add("hundred");
     } else break;
   };
 };
+
+function randomiseTarget() {
+  setTimeout(() => {
+    if (isChosen === false) {
+      for (let i = 0; i < 3; ++i) {
+        displayBoxes[i].textContent = Math.floor(Math.random() * 10);
+      }
+      randomiseTarget();
+    };
+  }, INTERVAL)
+}
 
