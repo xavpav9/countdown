@@ -184,6 +184,7 @@ function solveCountdown() {
       };
     };
   };
+  solutions.sort((a,b) => a[0].length - b[0].length);
 };
 
 function count(arr, num) {
