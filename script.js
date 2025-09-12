@@ -11,7 +11,7 @@ let target = "";
 
 const display = [];
 const rowValues = [];
-const solutions = [];
+let solutions = [];
 let isChosen = false;
 assignNumbers();
 
@@ -39,6 +39,7 @@ stopResetBtn.addEventListener("click", evt => {
     stopResetBtn.textContent = "Reset";
   } else if (stopResetBtn.textContent === "Reset") {
     target = "";
+    solution = [];
 
     while (display.pop() !== undefined);
     displayValues();
@@ -148,15 +149,39 @@ function solveCountdown() {
     };
   };
 
-  return possibleOperations;
-
-  const operations = [];
-
-  return operations;
+  for (const arr of combinations) {
+    for (const operators of possibleOperations[arr.length]) {
+      if (checkSolve(arr, operators)) solutions.push([arr, operators]);
+    };
+  };
+  solutions = solutions.filter((item, index, arr) => arr.indexOf(item) === index);
 };
 
 function count(arr, num) {
   return arr.reduce((acc, item) => {
     return (num === item) ? acc + 1 : acc;
   }, 0);
-}
+};
+
+function checkSolve(arr, operators) {
+  let currentValue = arr[0];
+  const newArr = arr.slice(1);
+  for (let i = 0; i < arr.length; ++i) {
+    switch (operators[i]) {
+      case 0:
+        currentValue += newArr[i];
+        break;
+      case 1:
+        currentValue -= newArr[i];
+        break;
+      case 2:
+        currentValue /= newArr[i];
+        break;
+      case 3:
+        currentValue *= newArr[i];
+        break;
+    };
+  };
+
+  return (currentValue === +target) ? true : false;
+};
