@@ -39,11 +39,11 @@ h1 {
   align-items: center;
   justify-content: space-evenly;
 
-  padding: 20px;
+  padding: 5vh 1vw;
   background-color: lightblue;
   width: max(600px, var(--max-width));
   margin: 0px auto;
-  height: 80vh;
+  height: auto;
 
   border: 2px solid black;
   border-radius: 20px;
@@ -96,7 +96,7 @@ h1 {
     font-size: 70px;
 
     &.hundred {
-      font-size: 50px;
+      font-size: 45px;
     }
   }
 }
@@ -189,11 +189,56 @@ h1 {
 .solve-display {
   border: 2px solid blue;
   background-color: white;
-  height: 100%;
-  width: 80%;
+  height: 60vh;
+  width: max(200px, 80%);
   overflow: auto;
   text-align: center;
   font-size: 1.5rem;
   scrollbar-color: blue transparent;
 }
 
+@media screen and (max-width: 600px) {
+  .gameboard {
+    flex-direction: column;
+    gap: 20px;
+    padding: 5vh 4vw;
+    width: 80vw;
+  }
+
+  .chosen {
+    & > div {
+      width: 40px;
+      height: 40px;
+      font-size: 40px;
+
+      &.hundred {
+        font-size: 25px;
+      }
+    }
+  }
+
+  .selection {
+    gap: 10px;
+
+    & > div { /*large-row, small-row*/
+      gap: 10px;
+      & > div {
+        width: 30px;
+        height: 30px;
+        font-size: 30px;
+      }
+    }
+  }
+  .right {
+    gap: 3vh;
+
+    width: 80%;
+    height: 400px;
+  }
+
+  .solve-display {
+    height: 100%;
+    width: 100%;
+    font-size: 1.5rem;
+  }
+}
