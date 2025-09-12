@@ -1,9 +1,12 @@
 const gameBoard = document.querySelector(".gameboard");
+const right = document.querySelector(".right");
 const smallRows = document.querySelectorAll(".small-row");
 const largeRow = document.querySelector(".large-row");
 const selection = document.querySelector(".selection");
 const chosen = document.querySelector(".chosen");
 const startBtn = document.querySelector(".start");
+const solveBtn = document.querySelector(".solve-button");
+const solveDisplay = document.querySelector(".solve-display");
 const stopResetBtn = document.querySelector(".reset-stop");
 const displayBoxes = [...document.querySelectorAll(".display-box")];
 const INTERVAL = 400;
@@ -27,7 +30,7 @@ selection.addEventListener("click", evt => {
 startBtn.addEventListener("click", evt => {
   if (display.length === 6) {
     randomiseTarget(0)
-  }
+  };
 });
 
 stopResetBtn.addEventListener("click", evt => {
@@ -39,6 +42,9 @@ stopResetBtn.addEventListener("click", evt => {
     solveCountdown();
     stopResetBtn.textContent = "Reset";
   } else if (stopResetBtn.textContent === "Reset") {
+    gameBoard.style.setProperty("--max-width", "40vw");
+    right.style.display = "none";
+
     target = "";
     solution = [];
 
@@ -54,8 +60,47 @@ stopResetBtn.addEventListener("click", evt => {
       box.classList.remove("selected");
     });
 
+    [...solveDisplay.children].forEach(child => child.remove())
+
     randomiseTarget(-1);
     stopResetBtn.textContent = "Stop";
+  };
+});
+
+solveBtn.addEventListener("click", evt => {
+  if (display.length === 6 && stopResetBtn.textContent === "Reset" && solveDisplay.children.length === 0) {
+    gameBoard.style.setProperty("--max-width", "80vw");
+    right.style.display = "flex";
+
+    if (solutions.length === 0) {
+      const h3 = document.createElement("h3");
+      h3.textContent = "No Solutions!";
+      solveDisplay.appendChild(h3);
+    } else {
+      const h3one = document.createElement("h3");
+      h3one.textContent = "Method 1";
+      solveDisplay.appendChild(h3one);
+      displaySolution(solutions[0]);
+
+      if (solutions.length >= 4) {
+        const hr = document.createElement("hr");
+        solveDisplay.appendChild(hr);
+
+        const h3two = document.createElement("h3");
+        h3two.textContent = "Method 2";
+        solveDisplay.appendChild(h3two);
+        displaySolution(solutions.at(-1));
+      };
+      if (solutions.length >= 8) {
+        const hr2 = document.createElement("hr");
+        solveDisplay.appendChild(hr2);
+
+        const h3three = document.createElement("h3");
+        h3three.textContent = "Method 3";
+        solveDisplay.appendChild(h3three);
+        displaySolution(solutions.at(Math.round(solutions.length / 2, 0)));
+      };
+    };
   };
 });
 
@@ -183,4 +228,35 @@ function checkSolve(arr, operators) {
   };
 
   return (currentValue === +target) ? true : false;
+};
+
+function displaySolution(solution) {
+  let result = solution[0][0];
+  let numbers = solution[0].slice(1);
+
+  for (let i = 0; i < numbers.length; ++i) {
+    const para = document.createElement("p");
+    para.textContent += result;
+
+    switch (solution[1][i]) {
+      case 0:
+        para.textContent += " + ";
+        result += numbers[i]
+        break;
+      case 1:
+        para.textContent += " - ";
+        result -= numbers[i]
+        break;
+      case 2:
+        para.textContent += " / ";
+        result /= numbers[i]
+        break;
+      case 3:
+        para.textContent += " x ";
+        result *= numbers[i]
+        break;
+    };
+    para.textContent += numbers[i] + " = " + result;
+    solveDisplay.appendChild(para);
+  };
 };
