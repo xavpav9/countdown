@@ -83,12 +83,20 @@ h1 {
   gap: 8px;
 
   & > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     border: 2px solid blue;
     border-radius: 5px;
     background-color: white;
     width: 70px;
     height: 70px;
     font-size: 70px;
+
+    &.hundred {
+      font-size: 50px;
+    }
   }
 }
 
@@ -103,7 +111,7 @@ h1 {
   flex-direction: column;
   gap: 8px;
 
-  & > div {
+  & > div { /*large-row, small-row*/
     display: flex;
     justify-content: center;
     gap: 8px;
