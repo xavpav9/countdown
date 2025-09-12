@@ -9,7 +9,7 @@ const solveBtn = document.querySelector(".solve-button");
 const solveDisplay = document.querySelector(".solve-display");
 const stopResetBtn = document.querySelector(".reset-stop");
 const displayBoxes = [...document.querySelectorAll(".display-box")];
-const INTERVAL = 400;
+const INTERVAL = 200;
 let target = "";
 
 const display = [];

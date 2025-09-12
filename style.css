@@ -33,6 +33,7 @@ h1 {
 
 .gameboard {
   --max-width: 40vw; /* solve-visible ? 80vw : 40vw */
+  transition: width 1s;
 
   display: flex;
   align-items: center;
@@ -193,5 +194,6 @@ h1 {
   overflow: auto;
   text-align: center;
   font-size: 1.5rem;
+  scrollbar-color: blue transparent;
 }
 
