@@ -89,7 +89,7 @@ stopResetBtn.addEventListener("click", evt => {
     right.style.display = "none";
 
     target = "";
-    solution = [];
+    solutions = [];
 
     while (display.pop() !== undefined);
     displayValues();
@@ -230,7 +230,7 @@ function checkSolve(arr, operators) {
 };
 
 function displaySolution(solution) {
-  let result = solution[0][0];
+  let result = display[solution[0][0]];
   let numbers = solution[0].slice(1);
 
   for (let i = 0; i < numbers.length; ++i) {
@@ -240,22 +240,22 @@ function displaySolution(solution) {
     switch (solution[1][i]) {
       case 0:
         para.textContent += " + ";
-        result += numbers[i]
+        result += display[numbers[i]];
         break;
       case 1:
         para.textContent += " - ";
-        result -= numbers[i]
+        result -= display[numbers[i]];
         break;
       case 2:
         para.textContent += " / ";
-        result /= numbers[i]
+        result /= display[numbers[i]];
         break;
       case 3:
         para.textContent += " x ";
-        result *= numbers[i]
+        result *= display[numbers[i]];
         break;
     };
-    para.textContent += numbers[i] + " = " + result;
+    para.textContent += display[numbers[i]] + " = " + Math.round(result, 4).toFixed();
     solveDisplay.appendChild(para);
   };
 };
