@@ -18,6 +18,49 @@ let solutions = [];
 let isChosen = false;
 assignNumbers();
 
+const possibleOperations = [];
+for (let l = 0; l < 6; ++l) {
+  possibleOperations[l] = [];
+  let operators = [];
+  for (let i = 0; i < l; ++i) operators.push(0);
+  possibleOperations[l].push(operators);
+
+
+  for (let i = 1; i < Math.pow(4, l); ++i) {
+    operators = [...operators];
+    for (let o = 0; o < l; ++o) {
+      operators[l-1-o] += 1;
+      if (operators[l-1-o] !== 4) break;
+      else  operators[l-1-o] = 0;
+    };
+    possibleOperations[l].push(operators);
+  };
+}
+
+const possibleNumbers = [];
+for (let l = 0; l < 6; ++l) {
+  possibleNumbers[l] = [];
+  let numbers = [];
+  for (let i = 0; i < l + 1; ++i) numbers.push(0);
+  if (l === 0) possibleNumbers[l].push(numbers);
+
+
+  mainLoop: for (let i = 1; i < Math.pow(6, l + 1); ++i) {
+    numbers = [...numbers];
+    for (let o = 0; o < l + 1; ++o) {
+      numbers[l-o] += 1;
+      if (numbers[l-o] !== 6) break;
+      else  numbers[l-o] = 0;
+    };
+    const seen = [];
+    for (const number of numbers) {
+      if (seen.includes(number)) continue mainLoop;
+      else seen.push(number);
+    };
+    possibleNumbers[l].push(numbers);
+  };
+}
+
 selection.addEventListener("click", evt => {
   const boxes = [...selection.querySelectorAll(".large-row > div, .small-row > div")];
   if (boxes.includes(evt.target) && ![...evt.target.classList].includes("selected") && display.length < 6) {
@@ -148,55 +191,11 @@ function randomiseTarget(interval=0) {
 }
 
 function solveCountdown() {
-  const displayCounts = display.reduce((acc, item, index, arr) => {
-    if (arr.indexOf(item) === index) {
-        acc[item] = 1;
-    } else {
-        acc[item] += 1;
-    }
-    return acc;
-  }, {});
-
-  let combinations = [];
-
-  function findCombinations(arr, index) {
-    for (let i = 0; i < display.length; ++i) {
-      newArr = [...arr].concat(display[i]);
-      currentCount = count(newArr, display[i])
-
-      if (currentCount <= displayCounts[display[i]]) {
-        combinations.push(newArr);
-        if (index + 1 !== display.length) {
-          findCombinations(newArr, index + 1);
-        };
+  for (const arrOfArrs of possibleNumbers) {
+    for (const arr of arrOfArrs) {
+      for (const operators of possibleOperations[arr.length - 1]) {
+        if (checkSolve(arr, operators)) solutions.push([arr, operators]);
       };
-    };
-  };
-
-  findCombinations([], 0);
-
-  const possibleOperations = {};
-  for (let l = 1; l < 7; ++l) {
-    possibleOperations[l] = [];
-    let operators = [];
-    for (let i = 0; i < l - 1; ++i) operators.push(0);
-    possibleOperations[l].push(operators);
-
-
-    for (let i = 1; i < Math.pow(4, l - 1); ++i) {
-      operators = [...operators];
-      for (let o = 0; o < l - 1; ++o) {
-        operators[l-2-o] += 1;
-        if (operators[l-2-o] !== 4) break;
-        else  operators[l-2-o] = 0;
-      };
-      possibleOperations[l].push(operators);
-    };
-  };
-
-  for (const arr of combinations) {
-    for (const operators of possibleOperations[arr.length]) {
-      if (checkSolve(arr, operators)) solutions.push([arr, operators]);
     };
   };
 };
@@ -208,21 +207,21 @@ function count(arr, num) {
 };
 
 function checkSolve(arr, operators) {
-  let currentValue = arr[0];
+  let currentValue = display[arr[0]];
   const newArr = arr.slice(1);
   for (let i = 0; i < arr.length; ++i) {
     switch (operators[i]) {
       case 0:
-        currentValue += newArr[i];
+        currentValue += display[newArr[i]];
         break;
       case 1:
-        currentValue -= newArr[i];
+        currentValue -= display[newArr[i]];
         break;
       case 2:
-        currentValue /= newArr[i];
+        currentValue /= display[newArr[i]];
         break;
       case 3:
-        currentValue *= newArr[i];
+        currentValue *= display[newArr[i]];
         break;
     };
   };
