@@ -1,6 +1,7 @@
 const gameBoard = document.querySelector(".gameboard");
 const smallRows = document.querySelectorAll(".small-row");
 const largeRow = document.querySelector(".large-row");
+const selection = document.querySelector(".selection");
 
 const smallRowsValues = []
 const largeRowValues = []
@@ -20,3 +21,10 @@ function assignNumbers() {
     largeOptions.splice(index, 1)
   }
 }
+
+selection.addEventListener("click", evt => {
+  if ([...selection.querySelectorAll(".large-row > div, .small-row > div")].includes(evt.target)) {
+    evt.target.classList.add("selected");
+  }
+});
+
