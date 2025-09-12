@@ -11,6 +11,7 @@ let target = "";
 
 const display = [];
 const rowValues = [];
+const solutions = [];
 let isChosen = false;
 assignNumbers();
 
@@ -99,3 +100,39 @@ function randomiseTarget(interval=0) {
   };
 }
 
+function solveCountdown() {
+  const displayCounts = display.reduce((acc, item, index, arr) => {
+    if (arr.indexOf(item) === index) {
+        acc[item] = 1;
+    } else {
+        acc[item] += 1;
+    }
+    return acc;
+  }, {});
+
+  let combinations = [];
+
+  function findCombinations(arr, index) {
+    for (let i = 0; i < display.length; ++i) {
+      newArr = [...arr].concat(display[i]);
+      currentCount = count(newArr, display[i])
+
+      if (currentCount <= displayCounts[display[i]]) {
+        combinations.push(newArr);
+        if (index + 1 !== display.length) {
+          findCombinations(newArr, index + 1);
+        };
+      };
+    };
+  };
+
+  findCombinations([], 0);
+  combinations = combinations.filter((item, index, arr) => arr.indexOf(item) === index);
+  return combinations;
+};
+
+function count(arr, num) {
+  return arr.reduce((acc, item) => {
+    return (num === item) ? acc + 1 : acc;
+  }, 0);
+}
