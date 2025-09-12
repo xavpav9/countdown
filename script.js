@@ -120,28 +120,14 @@ solveBtn.addEventListener("click", evt => {
       h3.textContent = "No Solutions!";
       solveDisplay.appendChild(h3);
     } else {
-      const h3one = document.createElement("h3");
-      h3one.textContent = "Method 1";
-      solveDisplay.appendChild(h3one);
-      displaySolution(solutions[0]);
+      for (let i = 0; i < Math.floor(Math.sqrt(solutions.length)); ++i) {
+        const h3one = document.createElement("h3");
+        h3one.textContent = `Method ${i+1}`;
+        solveDisplay.appendChild(h3one);
+        displaySolution(solutions[i*Math.floor(Math.sqrt(solutions.length))]);
 
-      if (solutions.length >= 4) {
         const hr = document.createElement("hr");
         solveDisplay.appendChild(hr);
-
-        const h3two = document.createElement("h3");
-        h3two.textContent = "Method 2";
-        solveDisplay.appendChild(h3two);
-        displaySolution(solutions.at(-1));
-      };
-      if (solutions.length >= 8) {
-        const hr2 = document.createElement("hr");
-        solveDisplay.appendChild(hr2);
-
-        const h3three = document.createElement("h3");
-        h3three.textContent = "Method 3";
-        solveDisplay.appendChild(h3three);
-        displaySolution(solutions.at(Math.round(solutions.length / 2, 0)));
       };
     };
   };
@@ -235,7 +221,7 @@ function displaySolution(solution) {
 
   for (let i = 0; i < numbers.length; ++i) {
     const para = document.createElement("p");
-    para.textContent += result;
+    para.textContent += (Math.round(result * 100) / 100);
 
     switch (solution[1][i]) {
       case 0:
@@ -255,7 +241,7 @@ function displaySolution(solution) {
         result *= display[numbers[i]];
         break;
     };
-    para.textContent += display[numbers[i]] + " = " + Math.round(result, 4).toFixed();
+    para.textContent += display[numbers[i]] + " = " + (Math.round(result * 100) / 100);
     solveDisplay.appendChild(para);
   };
 };
