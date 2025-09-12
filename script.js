@@ -25,17 +25,34 @@ selection.addEventListener("click", evt => {
 
 startBtn.addEventListener("click", evt => {
   if (display.length === 6) {
-    randomiseTarget()
+    randomiseTarget(0)
   }
 });
 
 stopResetBtn.addEventListener("click", evt => {
   if (display.length === 6 && stopResetBtn.textContent === "Stop") {
     isChosen = true;
-    setTimeout(() => {isChosen = false}, INTERVAL + 1);
     for (const box of displayBoxes) {
       target += box.textContent;
     };
+    stopResetBtn.textContent = "Reset";
+  } else if (stopResetBtn.textContent === "Reset") {
+    target = "";
+
+    while (display.pop() !== undefined);
+    displayValues();
+
+    assignNumbers();
+    isChosen = false;
+
+    const boxes = [...selection.querySelectorAll(".large-row > div, .small-row > div")];
+    boxes.forEach(box => {
+      box.classList.remove("hundred");
+      box.classList.remove("selected");
+    });
+
+    randomiseTarget(-1);
+    stopResetBtn.textContent = "Stop";
   };
 });
 
@@ -61,18 +78,24 @@ function displayValues() {
     if (display[i] !== undefined) {
       chosenBoxes[i].textContent = display[i];
       if (display[i] === 100) chosenBoxes[i].classList.add("hundred");
-    } else break;
+    } else chosenBoxes[i].textContent = "";
   };
 };
 
-function randomiseTarget() {
-  setTimeout(() => {
-    if (isChosen === false) {
-      for (let i = 0; i < 3; ++i) {
-        displayBoxes[i].textContent = Math.floor(Math.random() * 10);
-      }
-      randomiseTarget();
-    };
-  }, INTERVAL)
+function randomiseTarget(interval=0) {
+  if (interval === -1) {
+    for (let i = 0; i < 3; ++i) {
+      displayBoxes[i].textContent = 0;
+    }
+  } else {
+    setTimeout(() => {
+      if (isChosen === false) {
+        for (let i = 0; i < 3; ++i) {
+          displayBoxes[i].textContent = Math.floor(Math.random() * 10);
+        }
+        randomiseTarget(INTERVAL);
+      };
+    }, interval)
+  };
 }
 
