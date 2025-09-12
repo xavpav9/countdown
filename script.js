@@ -128,7 +128,31 @@ function solveCountdown() {
 
   findCombinations([], 0);
   combinations = combinations.filter((item, index, arr) => arr.indexOf(item) === index);
-  return combinations;
+
+  const possibleOperations = {};
+  for (let l = 1; l < 7; ++l) {
+    possibleOperations[l] = [];
+    let operators = [];
+    for (let i = 0; i < l - 1; ++i) operators.push(0);
+    possibleOperations[l].push(operators);
+
+
+    for (let i = 1; i < Math.pow(4, l - 1); ++i) {
+      operators = [...operators];
+      for (let o = 0; o < l - 1; ++o) {
+        operators[l-2-o] += 1;
+        if (operators[l-2-o] !== 4) break;
+        else  operators[l-2-o] = 0;
+      };
+      possibleOperations[l].push(operators);
+    };
+  };
+
+  return possibleOperations;
+
+  const operations = [];
+
+  return operations;
 };
 
 function count(arr, num) {
