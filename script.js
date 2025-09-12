@@ -36,6 +36,7 @@ stopResetBtn.addEventListener("click", evt => {
     for (const box of displayBoxes) {
       target += box.textContent;
     };
+    solveCountdown();
     stopResetBtn.textContent = "Reset";
   } else if (stopResetBtn.textContent === "Reset") {
     target = "";
@@ -128,7 +129,6 @@ function solveCountdown() {
   };
 
   findCombinations([], 0);
-  combinations = combinations.filter((item, index, arr) => arr.indexOf(item) === index);
 
   const possibleOperations = {};
   for (let l = 1; l < 7; ++l) {
@@ -154,7 +154,6 @@ function solveCountdown() {
       if (checkSolve(arr, operators)) solutions.push([arr, operators]);
     };
   };
-  solutions = solutions.filter((item, index, arr) => arr.indexOf(item) === index);
 };
 
 function count(arr, num) {
