@@ -1,4 +1,5 @@
 const gameBoard = document.querySelector(".gameboard");
+const displaySelection = document.querySelector(".display-selection");
 const right = document.querySelector(".right");
 const smallRows = document.querySelectorAll(".small-row");
 const largeRow = document.querySelector(".large-row");
@@ -13,6 +14,7 @@ const displayBoxes = [...document.querySelectorAll(".display-box")];
 const INTERVAL = 200;
 let target = "";
 const boxes = [...selection.querySelectorAll(".large-row > div, .small-row > div")];
+const displaySelectionBoxes = [...displaySelection.querySelectorAll("div")];
 
 const display = [];
 let rowValues = [];
@@ -75,13 +77,26 @@ selection.addEventListener("click", evt => {
 });
 
 startBtn.addEventListener("click", evt => {
-  if (display.length === 6) {
+  if (display.length === 6 && !custom) {
     randomiseTarget(0)
+  } else if (target.length === 3 && display.length === 6 && custom) {
+    isChosen = true;
+    solveCountdown();
+    stopResetBtn.textContent = "Reset";
+  };
+});
+
+displaySelection.addEventListener("click", evt => {
+  if (displaySelectionBoxes.includes(evt.target) && target.length < 3) {
+    target += evt.target.textContent;
+    for (let i = 0; i < 3; ++i) {
+      if (target[i] !== undefined) displayBoxes[i].textContent = target[i];
+    };
   };
 });
 
 stopResetBtn.addEventListener("click", evt => {
-  if (display.length === 6 && stopResetBtn.textContent === "Stop" && target !== "") {
+  if (display.length === 6 && stopResetBtn.textContent === "Stop" && target !== "" && !custom) {
     isChosen = true;
     solveCountdown();
     stopResetBtn.textContent = "Reset";
@@ -150,6 +165,7 @@ solveBtn.addEventListener("click", evt => {
 customBtn.addEventListener("click", evt => {
   if (display.length === 0 && custom === false) {
     custom = true;
+    displaySelection.style.display="flex";
     customBtn.classList.add("active");
     assignNumbers(0);
 
@@ -157,8 +173,9 @@ customBtn.addEventListener("click", evt => {
         boxes[i].textContent = rowValues[i];
     };
     boxes[3].classList.add("hundred");
-  } else if (display.length === 0 && custom === true) {
+  } else if (display.length === 0 && custom === true && target.length === 0) {
     custom = false;
+    displaySelection.style.display="none";
     customBtn.classList.remove("active");
     assignNumbers();
 
@@ -202,7 +219,7 @@ function displayValues() {
 function randomiseTarget(interval=0) {
   if (interval === -1) {
     for (let i = 0; i < 3; ++i) {
-      displayBoxes[i].textContent = 0;
+      displayBoxes[i].textContent = "";
     }
   } else {
     setTimeout(() => {
