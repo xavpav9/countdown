@@ -203,12 +203,14 @@ h1 {
   }
 
   .reset-stop {
+    display: none;
     background-color: #ff0000;
     &:hover {background-color: #ef0000;}
     &:active {background-color: #cf0000;}
   }
 
   .solve-button {
+    display: none;
     background-color: #f1f1f1;
     &:hover {background-color: #e1e1e1;}
     &:active {background-color: #d1d1d1;}
@@ -221,12 +223,13 @@ h1 {
   }
 
   .custom.active {
-    background-color: #55ee55;
-    &:hover {background-color: #55df55;}
-    &:active {background-color: #55c055;}
+    background-color: #00ffaa;
+    &:hover {background-color: #00ee99;}
+    &:active {background-color: #00dd88;}
   }
 
   .clear {
+    display: none;
     background-color: #ffff00;
     &:hover {background-color: #dddd00;}
     &:active {background-color: #bbbb00;}

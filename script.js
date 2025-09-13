@@ -71,6 +71,7 @@ for (let l = 0; l < 6; ++l) {
 
 selection.addEventListener("click", evt => {
   if (boxes.includes(evt.target) && ![...evt.target.classList].includes("selected") && display.length < 6) {
+    clearBtn.style.display = "inline-block";
     evt.target.classList.add("selected");
     display.push(rowValues[boxes.indexOf(evt.target)]);
     displayValues();
@@ -80,15 +81,22 @@ selection.addEventListener("click", evt => {
 startBtn.addEventListener("click", evt => {
   if (display.length === 6 && !custom) {
     randomiseTarget(0)
+    stopResetBtn.style.display = "inline-block";
   } else if (target.length === 3 && display.length === 6 && custom) {
     isChosen = true;
     solveCountdown();
     stopResetBtn.textContent = "Reset";
+    stopResetBtn.style.display = "inline-block";
+    solveBtn.style.display = "inline-block";
+    startBtn.style.display = "none";
+    clearBtn.style.display = "none";
+    customBtn.style.display = "none";
   };
 });
 
 displaySelection.addEventListener("click", evt => {
   if (displaySelectionBoxes.includes(evt.target) && target.length < 3) {
+    clearBtn.style.display = "inline-block";
     target += evt.target.textContent;
     for (let i = 0; i < 3; ++i) {
       if (target[i] !== undefined) displayBoxes[i].textContent = target[i];
@@ -100,6 +108,11 @@ stopResetBtn.addEventListener("click", evt => {
   if (stopResetBtn.textContent === "Reset" || evt.isTrusted === false) {
     gameBoard.style.setProperty("--max-width", "40vw");
     right.style.display = "none";
+    solveBtn.style.display = "none";
+    stopResetBtn.style.display = "none";
+    clearBtn.style.display = "none";
+    startBtn.style.display = "inline-block";
+    customBtn.style.display = "inline-block";
 
     target = "";
     solutions = [];
@@ -125,6 +138,10 @@ stopResetBtn.addEventListener("click", evt => {
     isChosen = true;
     solveCountdown();
     stopResetBtn.textContent = "Reset";
+    solveBtn.style.display = "inline-block";
+    startBtn.style.display = "none";
+    clearBtn.style.display = "none";
+    customBtn.style.display = "none";
   };
 });
 
