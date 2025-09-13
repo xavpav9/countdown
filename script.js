@@ -77,11 +77,8 @@ startBtn.addEventListener("click", evt => {
 });
 
 stopResetBtn.addEventListener("click", evt => {
-  if (display.length === 6 && stopResetBtn.textContent === "Stop") {
+  if (display.length === 6 && stopResetBtn.textContent === "Stop" && target !== "") {
     isChosen = true;
-    for (const box of displayBoxes) {
-      target += box.textContent;
-    };
     solveCountdown();
     stopResetBtn.textContent = "Reset";
   } else if (stopResetBtn.textContent === "Reset") {
@@ -167,9 +164,15 @@ function randomiseTarget(interval=0) {
   } else {
     setTimeout(() => {
       if (isChosen === false) {
-        for (let i = 0; i < 3; ++i) {
-          displayBoxes[i].textContent = Math.floor(Math.random() * 10);
-        }
+        displayBoxes[0].textContent = Math.floor(Math.random() * 9 + 1);
+        displayBoxes[1].textContent = Math.floor(Math.random() * 10);
+        displayBoxes[2].textContent = Math.floor(Math.random() * 10);
+
+        target=""
+        for (const box of displayBoxes) {
+          target += box.textContent;
+        };
+
         randomiseTarget(INTERVAL);
       };
     }, interval)
