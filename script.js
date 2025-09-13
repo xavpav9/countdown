@@ -15,6 +15,8 @@ let target = "";
 const display = [];
 const rowValues = [];
 let solutions = [];
+let closestSolution = [];
+let closestValue = 10000;
 let isChosen = false;
 assignNumbers();
 
@@ -87,6 +89,8 @@ stopResetBtn.addEventListener("click", evt => {
 
     target = "";
     solutions = [];
+    closestSolution = [];
+    closestValue = 10000;
 
     while (display.pop() !== undefined);
     displayValues();
@@ -116,6 +120,18 @@ solveBtn.addEventListener("click", evt => {
       const h3 = document.createElement("h3");
       h3.textContent = "No Solutions!";
       solveDisplay.appendChild(h3);
+
+      const hr = document.createElement("hr");
+      solveDisplay.appendChild(hr);
+
+      const h3one = document.createElement("h3");
+      h3one.textContent = "Closest Solution:";
+      solveDisplay.appendChild(h3one);
+      displaySolution(closestSolution);
+
+      const hr2 = document.createElement("hr");
+      solveDisplay.appendChild(hr2);
+
     } else {
       for (let i = 0; i < Math.floor(Math.sqrt(solutions.length)); ++i) {
         const h3one = document.createElement("h3");
@@ -215,7 +231,10 @@ function checkSolve(arr, operators) {
         break;
     };
   };
-
+  if (Math.abs(closestValue - +target) > Math.abs(currentValue - +target)) {
+    closestSolution = [arr, operators];
+    closestValue = currentValue;
+  };
   return (currentValue === +target) ? true : false;
 };
 
