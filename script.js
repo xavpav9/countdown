@@ -6,18 +6,21 @@ const selection = document.querySelector(".selection");
 const chosen = document.querySelector(".chosen");
 const startBtn = document.querySelector(".start");
 const solveBtn = document.querySelector(".solve-button");
+const customBtn = document.querySelector(".custom");
 const solveDisplay = document.querySelector(".solve-display");
 const stopResetBtn = document.querySelector(".reset-stop");
 const displayBoxes = [...document.querySelectorAll(".display-box")];
 const INTERVAL = 200;
 let target = "";
+const boxes = [...selection.querySelectorAll(".large-row > div, .small-row > div")];
 
 const display = [];
-const rowValues = [];
+let rowValues = [];
 let solutions = [];
 let closestSolution = [];
 let closestValue = 10000;
 let isChosen = false;
+custom = false;
 assignNumbers();
 
 const possibleOperations = [];
@@ -64,7 +67,6 @@ for (let l = 0; l < 6; ++l) {
 }
 
 selection.addEventListener("click", evt => {
-  const boxes = [...selection.querySelectorAll(".large-row > div, .small-row > div")];
   if (boxes.includes(evt.target) && ![...evt.target.classList].includes("selected") && display.length < 6) {
     evt.target.classList.add("selected");
     display.push(rowValues[boxes.indexOf(evt.target)]);
@@ -95,10 +97,9 @@ stopResetBtn.addEventListener("click", evt => {
     while (display.pop() !== undefined);
     displayValues();
 
-    assignNumbers();
+    if (!custom) assignNumbers();
     isChosen = false;
 
-    const boxes = [...selection.querySelectorAll(".large-row > div, .small-row > div")];
     boxes.forEach(box => box.classList.remove("selected"));
 
     const chosenBoxes = [...chosen.querySelectorAll("div")];
@@ -146,19 +147,45 @@ solveBtn.addEventListener("click", evt => {
   };
 });
 
-function assignNumbers() {
+customBtn.addEventListener("click", evt => {
+  if (display.length === 0 && custom === false) {
+    custom = true;
+    customBtn.classList.add("active");
+    assignNumbers(0);
+
+    for (let i = 0; i < boxes.length; ++i) {
+        boxes[i].textContent = rowValues[i];
+    };
+    boxes[3].classList.add("hundred");
+  } else if (display.length === 0 && custom === true) {
+    custom = false;
+    customBtn.classList.remove("active");
+    assignNumbers();
+
+    for (let i = 0; i < boxes.length; ++i) {
+        boxes[i].textContent = "";
+    };
+    boxes[3].classList.remove("hundred");
+  };
+});
+
+function assignNumbers(option=1) {
   const smallOptions = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10]
   const largeOptions = [25,50,75,100]
-  for (let i = 4; i < 24; ++i) {
-    index = Math.floor(Math.random() * smallOptions.length);
-    rowValues[i] = smallOptions[index];
-    smallOptions.splice(index, 1)
-  };
+  if (option === 1) {
+    for (let i = 4; i < 24; ++i) {
+      index = Math.floor(Math.random() * smallOptions.length);
+      rowValues[i] = smallOptions[index];
+      smallOptions.splice(index, 1)
+    };
 
-  for (let i = 0; i < 4; ++i) {
-    index = Math.floor(Math.random() * largeOptions.length);
-    rowValues[i] = largeOptions[index];
-    largeOptions.splice(index, 1)
+    for (let i = 0; i < 4; ++i) {
+      index = Math.floor(Math.random() * largeOptions.length);
+      rowValues[i] = largeOptions[index];
+      largeOptions.splice(index, 1)
+    };
+  } else if (option === 0) {
+    rowValues = largeOptions.concat(smallOptions);
   };
 };
 
