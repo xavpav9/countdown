@@ -8,6 +8,7 @@ const chosen = document.querySelector(".chosen");
 const startBtn = document.querySelector(".start");
 const solveBtn = document.querySelector(".solve-button");
 const customBtn = document.querySelector(".custom");
+const clearBtn = document.querySelector(".clear");
 const solveDisplay = document.querySelector(".solve-display");
 const stopResetBtn = document.querySelector(".reset-stop");
 const displayBoxes = [...document.querySelectorAll(".display-box")];
@@ -96,11 +97,7 @@ displaySelection.addEventListener("click", evt => {
 });
 
 stopResetBtn.addEventListener("click", evt => {
-  if (display.length === 6 && stopResetBtn.textContent === "Stop" && target !== "" && !custom) {
-    isChosen = true;
-    solveCountdown();
-    stopResetBtn.textContent = "Reset";
-  } else if (stopResetBtn.textContent === "Reset") {
+  if (stopResetBtn.textContent === "Reset" || evt.isTrusted === false) {
     gameBoard.style.setProperty("--max-width", "40vw");
     right.style.display = "none";
 
@@ -124,6 +121,10 @@ stopResetBtn.addEventListener("click", evt => {
 
     randomiseTarget(-1);
     stopResetBtn.textContent = "Stop";
+  } else if (display.length === 6 && stopResetBtn.textContent === "Stop" && target !== "" && !custom) {
+    isChosen = true;
+    solveCountdown();
+    stopResetBtn.textContent = "Reset";
   };
 });
 
@@ -184,6 +185,11 @@ customBtn.addEventListener("click", evt => {
     };
     boxes[3].classList.remove("hundred");
   };
+});
+
+clearBtn.addEventListener("click", evt => {
+  isChosen = true;
+  setTimeout(() => stopResetBtn.dispatchEvent(new Event("click")), INTERVAL);
 });
 
 function assignNumbers(option=1) {

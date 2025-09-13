@@ -225,6 +225,12 @@ h1 {
     &:hover {background-color: #55df55;}
     &:active {background-color: #55c055;}
   }
+
+  .clear {
+    background-color: #ffff00;
+    &:hover {background-color: #dddd00;}
+    &:active {background-color: #bbbb00;}
+  }
 }
 
 
