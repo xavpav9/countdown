@@ -82,6 +82,7 @@ startBtn.addEventListener("click", evt => {
   if (display.length === 6 && !custom) {
     randomiseTarget(0)
     stopResetBtn.style.display = "inline-block";
+    startBtn.style.display = "none";
   } else if (target.length === 3 && display.length === 6 && custom) {
     isChosen = true;
     solveCountdown();
