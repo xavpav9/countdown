@@ -95,10 +95,10 @@ stopResetBtn.addEventListener("click", evt => {
     isChosen = false;
 
     const boxes = [...selection.querySelectorAll(".large-row > div, .small-row > div")];
-    boxes.forEach(box => {
-      box.classList.remove("hundred");
-      box.classList.remove("selected");
-    });
+    boxes.forEach(box => box.classList.remove("selected"));
+
+    const chosenBoxes = [...chosen.querySelectorAll("div")];
+    chosenBoxes.forEach(box => box.classList.remove("hundred"));
 
     [...solveDisplay.children].forEach(child => child.remove())
 
