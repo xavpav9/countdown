@@ -299,7 +299,7 @@ function checkSolve(arr, operators) {
         break;
     };
   };
-  if (Math.abs(closestValue - +target) > Math.abs(currentValue - +target)) {
+  if (Math.abs(closestValue - +target) > Math.abs(currentValue - +target) && Number.isInteger(currentValue)) {
     closestSolution = [arr, operators];
     closestValue = currentValue;
   };
