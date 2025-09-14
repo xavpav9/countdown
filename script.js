@@ -290,6 +290,7 @@ function checkSolve(arr, operators) {
         currentValue *= display[newArr[i]];
         break;
     };
+    if (!Number.isInteger(currentValue) || currentValue < 0) return false;
   };
   if (Math.abs(closestValue - +target) > Math.abs(currentValue - +target) && Number.isInteger(currentValue)) {
     closestSolution = [arr, operators];
