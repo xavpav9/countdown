@@ -10,6 +10,7 @@ const solveBtn = document.querySelector(".solve-button");
 const customBtn = document.querySelector(".custom");
 const clearBtn = document.querySelector(".clear");
 const solveDisplay = document.querySelector(".solve-display");
+const timeDisplay = document.querySelector(".time");
 const stopResetBtn = document.querySelector(".reset-stop");
 const displayBoxes = [...document.querySelectorAll(".display-box")];
 const INTERVAL = 200;
@@ -23,6 +24,7 @@ let solutions = [];
 let closestSolution = [];
 let closestValue = 10000;
 let isChosen = false;
+let timerRunning = false;
 custom = false;
 assignNumbers();
 
@@ -84,14 +86,7 @@ startBtn.addEventListener("click", evt => {
     stopResetBtn.style.display = "inline-block";
     startBtn.style.display = "none";
   } else if (target.length === 3 && display.length === 6 && custom) {
-    isChosen = true;
-    solveCountdown();
-    stopResetBtn.textContent = "Reset";
-    stopResetBtn.style.display = "inline-block";
-    solveBtn.style.display = "inline-block";
-    startBtn.style.display = "none";
-    clearBtn.style.display = "none";
-    customBtn.style.display = "none";
+    startGame();
   };
 });
 
@@ -125,6 +120,8 @@ stopResetBtn.addEventListener("click", evt => {
 
     if (!custom) assignNumbers();
     isChosen = false;
+    timerRunning = false;
+    timeDisplay.textContent = "";
 
     boxes.forEach(box => box.classList.remove("selected"));
 
@@ -136,13 +133,7 @@ stopResetBtn.addEventListener("click", evt => {
     randomiseTarget(-1);
     stopResetBtn.textContent = "Stop";
   } else if (display.length === 6 && stopResetBtn.textContent === "Stop" && target !== "" && !custom) {
-    isChosen = true;
-    solveCountdown();
-    stopResetBtn.textContent = "Reset";
-    solveBtn.style.display = "inline-block";
-    startBtn.style.display = "none";
-    clearBtn.style.display = "none";
-    customBtn.style.display = "none";
+    startGame();
   };
 });
 
@@ -150,6 +141,7 @@ solveBtn.addEventListener("click", evt => {
   if (display.length === 6 && stopResetBtn.textContent === "Reset" && solveDisplay.children.length === 0) {
     gameBoard.style.setProperty("--max-width", "80vw");
     right.style.display = "flex";
+    timerRunning = false;
 
     if (solutions.length === 0) {
       const h3 = document.createElement("h3");
@@ -335,4 +327,33 @@ function displaySolution(solution) {
     para.textContent += display[numbers[i]] + " = " + (Math.round(result * 100) / 100);
     solveDisplay.appendChild(para);
   };
+};
+
+function timer() {
+  setTimeout(() => {
+    if (timerRunning) {
+      const currentTime = +timeDisplay.textContent.split(":")[1].split("s")[0] - 1;
+      if (currentTime === 0) {
+        timerRunning = false;
+        timeDisplay.textContent = "TIME'S UP!";
+      } else {
+        timeDisplay.textContent = `Time left: ${currentTime}s`;
+        timer();
+      };
+    };
+  }, 1000);
+};
+
+function startGame() {
+  isChosen = true;
+  solveCountdown();
+  stopResetBtn.textContent = "Reset";
+  stopResetBtn.style.display = "inline-block";
+  solveBtn.style.display = "inline-block";
+  startBtn.style.display = "none";
+  clearBtn.style.display = "none";
+  customBtn.style.display = "none";
+  timerRunning = true;
+  timeDisplay.textContent = "Time left: 30s";
+  timer();
 };

@@ -236,6 +236,10 @@ h1 {
   }
 }
 
+.time {
+  font-size: 1.2rem;
+}
+
 
 
 
@@ -264,14 +268,27 @@ h1 {
   scrollbar-color: blue transparent;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 900px) {
   .gameboard {
     flex-direction: column;
     gap: 20px;
     padding: 5vh 4vw;
     width: 80vw;
   }
+  .right {
+    gap: 3vh;
 
+    width: 80%;
+    height: 400px;
+  }
+  .solve-display {
+    height: 100%;
+    width: 100%;
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
   .chosen {
     & > div {
       width: 40px;
@@ -299,17 +316,5 @@ h1 {
         }
       }
     }
-  }
-  .right {
-    gap: 3vh;
-
-    width: 80%;
-    height: 400px;
-  }
-
-  .solve-display {
-    height: 100%;
-    width: 100%;
-    font-size: 1.5rem;
   }
 }
